@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>استكشاف احتياجات النظام — LoopChat CRM</title>
+<title>استكشاف تحديات الواجهات — LoopChat CRM</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  
   :root {
     --bg: #f7f6f3;
     --surface: #ffffff;
@@ -24,10 +23,11 @@
     --warning-border: #f5e4a0;
     --success-bg: #f0faf5;
     --success-border: #a8e0c0;
+    --purple-bg: #f6f0ff;
+    --purple-border: #d8c4fb;
     --radius: 10px;
     --radius-sm: 6px;
   }
-
   body {
     font-family: 'Tajawal', sans-serif;
     background: var(--bg);
@@ -36,12 +36,7 @@
     padding: 2rem 1rem 4rem;
     line-height: 1.7;
   }
-
-  .wrapper {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
+  .wrapper { max-width: 760px; margin: 0 auto; }
   .header {
     text-align: center;
     margin-bottom: 2.5rem;
@@ -50,7 +45,6 @@
     border-radius: 16px;
     border: 1px solid var(--border);
   }
-
   .header-logo {
     display: inline-flex;
     align-items: center;
@@ -64,21 +58,8 @@
     margin-bottom: 1rem;
     border: 1px solid #c5d8f5;
   }
-
-  .header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-  }
-
-  .header p {
-    font-size: 14px;
-    color: var(--text-muted);
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
+  .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+  .header p { font-size: 14px; color: var(--text-muted); max-width: 560px; margin: 0 auto; }
   .section {
     background: var(--surface);
     border-radius: var(--radius);
@@ -86,7 +67,6 @@
     padding: 1.5rem;
     margin-bottom: 1.25rem;
   }
-
   .section-header {
     display: flex;
     align-items: center;
@@ -95,7 +75,6 @@
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
   }
-
   .section-num {
     width: 30px;
     height: 30px;
@@ -107,36 +86,45 @@
     font-weight: 700;
     flex-shrink: 0;
   }
-
   .num-blue { background: var(--accent-bg); color: var(--accent); border: 1px solid #c5d8f5; }
   .num-red { background: var(--danger-bg); color: #c0442a; border: 1px solid var(--danger-border); }
   .num-yellow { background: var(--warning-bg); color: #8a6d00; border: 1px solid var(--warning-border); }
   .num-green { background: var(--success-bg); color: #1a7a4a; border: 1px solid var(--success-border); }
-
-  .section-header h2 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .field { margin-bottom: 1.4rem; }
+  .num-purple { background: var(--purple-bg); color: #6d3bbf; border: 1px solid var(--purple-border); }
+  .section-header h2 { font-size: 15px; font-weight: 700; color: var(--text); }
+  .field { margin-bottom: 1.45rem; }
   .field:last-child { margin-bottom: 0; }
-
-  label.field-label {
-    display: block;
+  label.field-label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 5px; color: var(--text); }
+  .field-hint { font-size: 12px; color: var(--text-light); margin-bottom: 10px; display: block; }
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .check-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .check-list { display: flex; flex-direction: column; gap: 9px; }
+  .check-grid label, .check-list label {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
     font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 5px;
     color: var(--text);
+    cursor: pointer;
+    line-height: 1.5;
+    padding: 10px 11px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.15s, background 0.15s;
   }
-
-  .field-hint {
-    font-size: 12px;
-    color: var(--text-light);
-    margin-bottom: 10px;
-    display: block;
+  .check-grid label:hover, .check-list label:hover { background: #fff; border-color: #c5d8f5; }
+  input[type="checkbox"] {
+    accent-color: var(--accent);
+    margin-top: 3px;
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
   }
-
   textarea, input[type="text"] {
     width: 100%;
     padding: 10px 13px;
@@ -149,59 +137,11 @@
     resize: vertical;
     transition: border-color 0.15s;
     line-height: 1.6;
+    margin-top: 9px;
   }
-
-  textarea:focus, input[type="text"]:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    background: #fff;
-  }
-
-  textarea { min-height: 75px; }
-
-  .radio-group, .check-group {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-
-  .radio-group.inline, .check-group.inline {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-  }
-
-  .check-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
-  }
-
-  .radio-group label, .check-group label, .check-grid label {
-    display: flex;
-    align-items: flex-start;
-    gap: 9px;
-    font-size: 14px;
-    color: var(--text);
-    cursor: pointer;
-    line-height: 1.5;
-  }
-
-  input[type="radio"], input[type="checkbox"] {
-    accent-color: var(--accent);
-    margin-top: 3px;
-    flex-shrink: 0;
-    width: 15px;
-    height: 15px;
-  }
-
-  .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
-
-  .submit-area {
-    text-align: center;
-    margin-top: 2rem;
-  }
-
+  textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--border-focus); background: #fff; }
+  textarea { min-height: 62px; }
+  .submit-area { text-align: center; margin-top: 2rem; }
   button[type="submit"] {
     background: var(--accent);
     color: white;
@@ -214,16 +154,9 @@
     cursor: pointer;
     transition: opacity 0.15s, transform 0.1s;
   }
-
   button[type="submit"]:hover { opacity: 0.9; }
   button[type="submit"]:active { transform: scale(0.98); }
-
-  .note {
-    font-size: 12px;
-    color: var(--text-light);
-    margin-top: 10px;
-  }
-
+  .note { font-size: 12px; color: var(--text-light); margin-top: 10px; }
   #success-msg {
     display: none;
     background: var(--success-bg);
@@ -233,22 +166,10 @@
     text-align: center;
     margin-top: 1.5rem;
   }
-
-  #success-msg h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #1a7a4a;
-    margin-bottom: 6px;
-  }
-
-  #success-msg p {
-    font-size: 13px;
-    color: #2d7a50;
-  }
-
-  @media (max-width: 480px) {
-    .check-grid { grid-template-columns: 1fr; }
-    .radio-group.inline { flex-direction: column; }
+  #success-msg h3 { font-size: 16px; font-weight: 700; color: #1a7a4a; margin-bottom: 6px; }
+  #success-msg p { font-size: 13px; color: #2d7a50; }
+  @media (max-width: 680px) {
+    .check-grid, .check-grid.three { grid-template-columns: 1fr; }
     body { padding: 1rem 0.75rem 3rem; }
     .section { padding: 1.25rem; }
   }
@@ -256,27 +177,26 @@
 </head>
 <body>
 <div class="wrapper">
-
   <div class="header">
     <div class="header-logo">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8h6M8 5v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       LoopChat CRM
     </div>
-    <h1>استكشاف احتياجات النظام</h1>
-    <p>نريد أن نفهم واقع عملكم اليومي لنبني نظاماً يحل مشاكلكم الحقيقية — لا توجد إجابات صح أو غلط.</p>
+    <h1>تقييم تحديات الواجهات الحالية</h1>
+    <p>الهدف من هذا النموذج هو فهم ما يزعج المستخدمين في الواجهات الحالية، وما الذي يجب أن يسهّله النظام الجديد. اختر كل الخيارات التي تنطبق على واقع عملك.</p>
   </div>
 
   <form id="discovery-form">
 
-    <!-- Section 1 -->
     <div class="section">
       <div class="section-header">
         <div class="section-num num-blue">١</div>
-        <h2>يومك في العمل</h2>
+        <h2>دورك وطريقة استخدامك للنظام</h2>
       </div>
 
       <div class="field">
         <label class="field-label">ما هو دورك في الشركة؟</label>
+        <span class="field-hint">يمكن اختيار أكثر من دور إذا كان عملك متداخل.</span>
         <div class="check-grid">
           <label><input type="checkbox" name="role" value="مدير / صاحب قرار"> مدير / صاحب قرار</label>
           <label><input type="checkbox" name="role" value="مدير مبيعات"> مدير مبيعات</label>
@@ -284,39 +204,113 @@
           <label><input type="checkbox" name="role" value="دعم فني / خدمة عملاء"> دعم فني / خدمة عملاء</label>
           <label><input type="checkbox" name="role" value="مشرف مشاريع"> مشرف مشاريع</label>
           <label><input type="checkbox" name="role" value="محاسب / مالي"> محاسب / مالي</label>
+          <label><input type="checkbox" name="role" value="إدخال بيانات / عمليات"> إدخال بيانات / عمليات</label>
+          <label><input type="checkbox" name="role" value="أخرى"> أخرى</label>
         </div>
-        <input type="text" name="role_other" placeholder="أخرى..." style="margin-top:9px;">
+        <input type="text" name="role_other" placeholder="إن اخترت أخرى، اكتب الدور هنا...">
       </div>
 
       <div class="field">
-        <label class="field-label">ما أول شيء تفعله حين تفتح الكمبيوتر صباحاً؟</label>
-        <textarea name="morning" placeholder="مثال: أفتح الإيميل وأشوف الطلبات الجديدة، ثم أفتح الواتساب لأرد على العملاء..."></textarea>
+        <label class="field-label">ما أكثر الشاشات أو العمليات التي تستخدمها حالياً؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="used_screens" value="تسجيل عميل جديد"> تسجيل عميل جديد</label>
+          <label><input type="checkbox" name="used_screens" value="متابعة العملاء المحتملين Leads"> متابعة العملاء المحتملين Leads</label>
+          <label><input type="checkbox" name="used_screens" value="إدارة العملاء Accounts / Contacts"> إدارة العملاء Accounts / Contacts</label>
+          <label><input type="checkbox" name="used_screens" value="متابعة الصفقات Opportunities"> متابعة الصفقات Opportunities</label>
+          <label><input type="checkbox" name="used_screens" value="المهام والمتابعات Tasks"> المهام والمتابعات Tasks</label>
+          <label><input type="checkbox" name="used_screens" value="العروض السعرية Quotes"> العروض السعرية Quotes</label>
+          <label><input type="checkbox" name="used_screens" value="الفواتير Invoices"> الفواتير Invoices</label>
+          <label><input type="checkbox" name="used_screens" value="التقارير Reports"> التقارير Reports</label>
+          <label><input type="checkbox" name="used_screens" value="رفع الملفات والمستندات"> رفع الملفات والمستندات</label>
+          <label><input type="checkbox" name="used_screens" value="البحث عن معلومات سابقة"> البحث عن معلومات سابقة</label>
+        </div>
       </div>
 
       <div class="field">
-        <label class="field-label">كم تطبيق أو أداة تفتحها في يوم عمل عادي؟</label>
-        <div class="radio-group inline">
-          <label><input type="radio" name="tools_count" value="1-2 أداة"> 1-2 أداة</label>
-          <label><input type="radio" name="tools_count" value="3-4 أدوات"> 3-4 أدوات</label>
-          <label><input type="radio" name="tools_count" value="5 أدوات أو أكثر"> 5 أدوات أو أكثر</label>
+        <label class="field-label">كم أداة أو تطبيق تحتاج أن تفتح لإنجاز عملك اليومي؟</label>
+        <div class="check-grid three">
+          <label><input type="checkbox" name="tools_count" value="أداة واحدة أو اثنتان"> أداة واحدة أو اثنتان</label>
+          <label><input type="checkbox" name="tools_count" value="3-4 أدوات"> 3-4 أدوات</label>
+          <label><input type="checkbox" name="tools_count" value="5 أدوات أو أكثر"> 5 أدوات أو أكثر</label>
+          <label><input type="checkbox" name="tools_count" value="لا يوجد نظام ثابت"> لا يوجد نظام ثابت</label>
+          <label><input type="checkbox" name="tools_count" value="أعتمد على واتساب وإيميل كثيراً"> أعتمد على واتساب وإيميل كثيراً</label>
+          <label><input type="checkbox" name="tools_count" value="أعتمد على Excel أو ملفات مشتركة"> أعتمد على Excel أو ملفات مشتركة</label>
         </div>
       </div>
     </div>
 
-    <!-- Section 2 -->
     <div class="section">
       <div class="section-header">
         <div class="section-num num-red">٢</div>
-        <h2>الصعوبات الحقيقية</h2>
+        <h2>تحديات الواجهات الحالية</h2>
       </div>
 
       <div class="field">
-        <label class="field-label">أخبرني عن آخر مرة ضاعت فيها معلومة مهمة عن عميل أو صفقة</label>
-        <textarea name="lost_info" placeholder="مثال: عميل اتصل وقال إنه أرسل طلباً من أسبوع، ما كنا نعرف عنه شيئاً..."></textarea>
+        <label class="field-label">ما المشاكل التي تواجهك في الواجهات الحالية؟</label>
+        <span class="field-hint">اختر كل ما يحدث معك فعلياً، لا ما تتوقع أنه مهم فقط.</span>
+        <div class="check-grid">
+          <label><input type="checkbox" name="ui_problems" value="الشاشات مزدحمة وفيها معلومات كثيرة"> الشاشات مزدحمة وفيها معلومات كثيرة</label>
+          <label><input type="checkbox" name="ui_problems" value="الوصول للمعلومة يحتاج خطوات كثيرة"> الوصول للمعلومة يحتاج خطوات كثيرة</label>
+          <label><input type="checkbox" name="ui_problems" value="البحث غير واضح أو نتائجه غير دقيقة"> البحث غير واضح أو نتائجه غير دقيقة</label>
+          <label><input type="checkbox" name="ui_problems" value="لا أعرف أين أجد المعلومة المطلوبة"> لا أعرف أين أجد المعلومة المطلوبة</label>
+          <label><input type="checkbox" name="ui_problems" value="أسماء الحقول غير مفهومة"> أسماء الحقول غير مفهومة</label>
+          <label><input type="checkbox" name="ui_problems" value="كثرة الحقول المطلوبة عند الإدخال"> كثرة الحقول المطلوبة عند الإدخال</label>
+          <label><input type="checkbox" name="ui_problems" value="لا يوجد تمييز واضح بين الحالات والمراحل"> لا يوجد تمييز واضح بين الحالات والمراحل</label>
+          <label><input type="checkbox" name="ui_problems" value="التنبيهات غير واضحة أو كثيرة"> التنبيهات غير واضحة أو كثيرة</label>
+          <label><input type="checkbox" name="ui_problems" value="الواجهة بطيئة أو تتأخر بالتحميل"> الواجهة بطيئة أو تتأخر بالتحميل</label>
+          <label><input type="checkbox" name="ui_problems" value="التصميم لا يساعدني على معرفة الأولويات"> التصميم لا يساعدني على معرفة الأولويات</label>
+        </div>
       </div>
 
       <div class="field">
-        <label class="field-label">من أين يأتيك طلب العميل عادةً؟</label>
+        <label class="field-label">أين يضيع وقتك أكثر داخل النظام أو الأدوات الحالية؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="time_waste" value="البحث عن بيانات العميل"> البحث عن بيانات العميل</label>
+          <label><input type="checkbox" name="time_waste" value="معرفة آخر تواصل مع العميل"> معرفة آخر تواصل مع العميل</label>
+          <label><input type="checkbox" name="time_waste" value="تسجيل طلب جديد"> تسجيل طلب جديد</label>
+          <label><input type="checkbox" name="time_waste" value="تحديث حالة الصفقة أو الطلب"> تحديث حالة الصفقة أو الطلب</label>
+          <label><input type="checkbox" name="time_waste" value="تجميع معلومات من أكثر من مكان"> تجميع معلومات من أكثر من مكان</label>
+          <label><input type="checkbox" name="time_waste" value="إعداد تقرير للإدارة"> إعداد تقرير للإدارة</label>
+          <label><input type="checkbox" name="time_waste" value="معرفة الشخص المسؤول عن الطلب"> معرفة الشخص المسؤول عن الطلب</label>
+          <label><input type="checkbox" name="time_waste" value="متابعة المهام المتأخرة"> متابعة المهام المتأخرة</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما الأخطاء التي تحصل بسبب صعوبة الواجهة أو تشتت الأدوات؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="errors" value="نسيان متابعة عميل"> نسيان متابعة عميل</label>
+          <label><input type="checkbox" name="errors" value="تكرار إدخال نفس العميل"> تكرار إدخال نفس العميل</label>
+          <label><input type="checkbox" name="errors" value="فقدان معلومات مهمة"> فقدان معلومات مهمة</label>
+          <label><input type="checkbox" name="errors" value="عدم معرفة المسؤول عن الطلب"> عدم معرفة المسؤول عن الطلب</label>
+          <label><input type="checkbox" name="errors" value="تأخير الرد على العميل"> تأخير الرد على العميل</label>
+          <label><input type="checkbox" name="errors" value="إرسال عرض سعر أو فاتورة بمعلومات ناقصة"> إرسال عرض سعر أو فاتورة بمعلومات ناقصة</label>
+          <label><input type="checkbox" name="errors" value="اختلاف المعلومات بين الموظفين"> اختلاف المعلومات بين الموظفين</label>
+          <label><input type="checkbox" name="errors" value="صعوبة معرفة حالة العميل أو الصفقة"> صعوبة معرفة حالة العميل أو الصفقة</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما مستوى صعوبة استخدام الواجهة الحالية؟</label>
+        <div class="check-grid three">
+          <label><input type="checkbox" name="difficulty_level" value="سهلة غالباً"> سهلة غالباً</label>
+          <label><input type="checkbox" name="difficulty_level" value="متوسطة وتحتاج تعوّد"> متوسطة وتحتاج تعوّد</label>
+          <label><input type="checkbox" name="difficulty_level" value="صعبة للموظفين الجدد"> صعبة للموظفين الجدد</label>
+          <label><input type="checkbox" name="difficulty_level" value="صعبة حتى للمستخدمين الحاليين"> صعبة حتى للمستخدمين الحاليين</label>
+          <label><input type="checkbox" name="difficulty_level" value="تحتاج تدريب طويل"> تحتاج تدريب طويل</label>
+          <label><input type="checkbox" name="difficulty_level" value="لا يوجد واجهة موحدة حالياً"> لا يوجد واجهة موحدة حالياً</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num num-yellow">٣</div>
+        <h2>متابعة العملاء والطلبات</h2>
+      </div>
+
+      <div class="field">
+        <label class="field-label">من أين تأتي طلبات العملاء عادة؟</label>
         <div class="check-grid">
           <label><input type="checkbox" name="channels" value="واتساب"> واتساب</label>
           <label><input type="checkbox" name="channels" value="إيميل"> إيميل</label>
@@ -324,100 +318,142 @@
           <label><input type="checkbox" name="channels" value="زيارة مباشرة"> زيارة مباشرة</label>
           <label><input type="checkbox" name="channels" value="موقع الشركة"> موقع الشركة</label>
           <label><input type="checkbox" name="channels" value="سوشيال ميديا"> سوشيال ميديا</label>
+          <label><input type="checkbox" name="channels" value="إحالة من عميل آخر"> إحالة من عميل آخر</label>
+          <label><input type="checkbox" name="channels" value="حملات تسويقية"> حملات تسويقية</label>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label">لما يأتي طلب جديد الآن — كيف يُسجَّل ومن يعلم به؟</label>
-        <textarea name="request_flow" placeholder="مثال: الموظف يكتبه في ورقة أو Excel، ويبلّغ مديره عبر واتساب..."></textarea>
-      </div>
-
-      <div class="field">
-        <label class="field-label">كم مرة في الأسبوع تسمع "ما علمنا بهذا الطلب" أو "من المسؤول عن هذا"؟</label>
-        <div class="radio-group inline">
-          <label><input type="radio" name="confusion_freq" value="نادراً"> نادراً</label>
-          <label><input type="radio" name="confusion_freq" value="1-2 مرة"> 1-2 مرة</label>
-          <label><input type="radio" name="confusion_freq" value="3-5 مرات"> 3-5 مرات</label>
-          <label><input type="radio" name="confusion_freq" value="يومياً تقريباً"> يومياً تقريباً</label>
+        <label class="field-label">كيف تعرف تاريخ العميل حالياً؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="client_history" value="من الذاكرة الشخصية"> من الذاكرة الشخصية</label>
+          <label><input type="checkbox" name="client_history" value="أسأل زميل أو مدير"> أسأل زميل أو مدير</label>
+          <label><input type="checkbox" name="client_history" value="أبحث في واتساب"> أبحث في واتساب</label>
+          <label><input type="checkbox" name="client_history" value="أبحث في الإيميل"> أبحث في الإيميل</label>
+          <label><input type="checkbox" name="client_history" value="أبحث في Excel أو ملف مشترك"> أبحث في Excel أو ملف مشترك</label>
+          <label><input type="checkbox" name="client_history" value="يوجد نظام يعرض التاريخ مباشرة"> يوجد نظام يعرض التاريخ مباشرة</label>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label">لو طلب منك مديرك الآن تقرير عن أداء الشهر الماضي — كم يأخذ منك وقتاً؟</label>
-        <div class="radio-group inline">
-          <label><input type="radio" name="report_time" value="أقل من ساعة"> أقل من ساعة</label>
-          <label><input type="radio" name="report_time" value="نصف يوم"> نصف يوم</label>
-          <label><input type="radio" name="report_time" value="يوم كامل أو أكثر"> يوم كامل أو أكثر</label>
-          <label><input type="radio" name="report_time" value="لا يمكنني إعداده بمفردي"> لا يمكنني إعداده بمفردي</label>
+        <label class="field-label">ما المعلومات التي تحتاج أن تظهر أمامك مباشرة عند فتح صفحة العميل؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="client_page_needs" value="بيانات الاتصال الأساسية"> بيانات الاتصال الأساسية</label>
+          <label><input type="checkbox" name="client_page_needs" value="آخر تواصل مع العميل"> آخر تواصل مع العميل</label>
+          <label><input type="checkbox" name="client_page_needs" value="الموظف المسؤول"> الموظف المسؤول</label>
+          <label><input type="checkbox" name="client_page_needs" value="حالة العميل أو الصفقة"> حالة العميل أو الصفقة</label>
+          <label><input type="checkbox" name="client_page_needs" value="الطلبات المفتوحة"> الطلبات المفتوحة</label>
+          <label><input type="checkbox" name="client_page_needs" value="العروض والفواتير"> العروض والفواتير</label>
+          <label><input type="checkbox" name="client_page_needs" value="الملاحظات المهمة"> الملاحظات المهمة</label>
+          <label><input type="checkbox" name="client_page_needs" value="الملفات والمرفقات"> الملفات والمرفقات</label>
+          <label><input type="checkbox" name="client_page_needs" value="المهام القادمة"> المهام القادمة</label>
+          <label><input type="checkbox" name="client_page_needs" value="تنبيهات المخاطر أو التأخير"> تنبيهات المخاطر أو التأخير</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما أكثر شيء يسبب ضياع أو تأخير في متابعة العميل؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="followup_delay" value="لا يوجد تنبيه واضح للمتابعة"> لا يوجد تنبيه واضح للمتابعة</label>
+          <label><input type="checkbox" name="followup_delay" value="لا نعرف من المسؤول"> لا نعرف من المسؤول</label>
+          <label><input type="checkbox" name="followup_delay" value="المعلومات موزعة بين أكثر من مكان"> المعلومات موزعة بين أكثر من مكان</label>
+          <label><input type="checkbox" name="followup_delay" value="لا يوجد تاريخ واضح للتواصل"> لا يوجد تاريخ واضح للتواصل</label>
+          <label><input type="checkbox" name="followup_delay" value="الواجهة لا تظهر الأولويات"> الواجهة لا تظهر الأولويات</label>
+          <label><input type="checkbox" name="followup_delay" value="كثرة المهام اليدوية"> كثرة المهام اليدوية</label>
         </div>
       </div>
     </div>
 
-    <!-- Section 3 -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num num-yellow">٣</div>
-        <h2>العلاقة مع العملاء</h2>
-      </div>
-
-      <div class="field">
-        <label class="field-label">لما يتصل عميل قديم — كيف تعرف تاريخه معكم؟</label>
-        <div class="radio-group">
-          <label><input type="radio" name="client_history" value="أذكره من الذاكرة أو أسأل زميلي"> أذكره من الذاكرة أو أسأل زميلي</label>
-          <label><input type="radio" name="client_history" value="أبحث في الإيميل والواتساب"> أبحث في الإيميل والواتساب</label>
-          <label><input type="radio" name="client_history" value="Excel أو ملف مشترك"> Excel أو ملف مشترك</label>
-          <label><input type="radio" name="client_history" value="نظام موجود يعطيني المعلومات مباشرة"> نظام موجود يعطيني المعلومات مباشرة</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">هل سبق أن اتصل عليك عميل شاكياً لأنه لم يُرد عليه في الوقت المناسب؟</label>
-        <div class="radio-group inline">
-          <label><input type="radio" name="complaint" value="نعم، أكثر من مرة"> نعم، أكثر من مرة</label>
-          <label><input type="radio" name="complaint" value="نعم، مرة أو مرتين"> نعم، مرة أو مرتين</label>
-          <label><input type="radio" name="complaint" value="لا، نادراً"> لا، نادراً</label>
-        </div>
-        <textarea name="complaint_detail" placeholder="إن أردت، اذكر ما حصل..." style="margin-top:9px;min-height:60px;"></textarea>
-      </div>
-
-      <div class="field">
-        <label class="field-label">كيف تعرف الآن أن الصفقة "ستُكسب" أو "ستُخسر"؟</label>
-        <textarea name="deal_sense" placeholder="مثال: من تجربتي الشخصية فقط، ما فيه مؤشر واضح..."></textarea>
-      </div>
-    </div>
-
-    <!-- Section 4 -->
     <div class="section">
       <div class="section-header">
         <div class="section-num num-green">٤</div>
-        <h2>التوقعات من النظام الجديد</h2>
+        <h2>ما المتوقع أن يسهّله النظام الجديد؟</h2>
       </div>
 
       <div class="field">
-        <label class="field-label">تخيّل أنك بعد 6 أشهر من النظام الجديد — ماذا تتمنى أن يكون تغيّر؟</label>
-        <textarea name="dream" placeholder="مثال: أفتح صباحاً ويعطيني النظام قائمة بالعملاء اللي محتاجين متابعة اليوم..." style="min-height:85px;"></textarea>
-      </div>
-
-      <div class="field">
-        <label class="field-label">ما الذي تخشى أن يحدث مع النظام الجديد؟</label>
-        <div class="radio-group">
-          <label><input type="checkbox" name="fears" value="معقد وسيأخذ وقتاً للتعلم"> معقد وسيأخذ وقتاً للتعلم</label>
-          <label><input type="checkbox" name="fears" value="الفريق لن يستخدمه بانتظام"> الفريق لن يستخدمه بانتظام</label>
-          <label><input type="checkbox" name="fears" value="ستضيع بيانات قديمة عند التحويل"> ستضيع بيانات قديمة عند التحويل</label>
-          <label><input type="checkbox" name="fears" value="لن يناسب طريقة عملنا تحديداً"> لن يناسب طريقة عملنا تحديداً</label>
-          <label><input type="checkbox" name="fears" value="لا مخاوف، متحمس تماماً"> لا مخاوف، متحمس تماماً</label>
+        <label class="field-label">ما أهم الأشياء التي يجب أن تصبح أسهل في النظام الجديد؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="expected_ease" value="إضافة عميل أو طلب بسرعة"> إضافة عميل أو طلب بسرعة</label>
+          <label><input type="checkbox" name="expected_ease" value="البحث عن العميل من مكان واحد"> البحث عن العميل من مكان واحد</label>
+          <label><input type="checkbox" name="expected_ease" value="رؤية آخر تواصل فوراً"> رؤية آخر تواصل فوراً</label>
+          <label><input type="checkbox" name="expected_ease" value="معرفة المسؤول عن كل عميل أو طلب"> معرفة المسؤول عن كل عميل أو طلب</label>
+          <label><input type="checkbox" name="expected_ease" value="متابعة المهام والتذكيرات"> متابعة المهام والتذكيرات</label>
+          <label><input type="checkbox" name="expected_ease" value="فهم حالة الصفقة بنظرة واحدة"> فهم حالة الصفقة بنظرة واحدة</label>
+          <label><input type="checkbox" name="expected_ease" value="إنشاء عروض سعر وفواتير أسرع"> إنشاء عروض سعر وفواتير أسرع</label>
+          <label><input type="checkbox" name="expected_ease" value="إعداد تقارير دون تجميع يدوي"> إعداد تقارير دون تجميع يدوي</label>
+          <label><input type="checkbox" name="expected_ease" value="تقليل إدخال البيانات المتكرر"> تقليل إدخال البيانات المتكرر</label>
+          <label><input type="checkbox" name="expected_ease" value="توحيد العمل بين الفريق"> توحيد العمل بين الفريق</label>
         </div>
-        <textarea name="fear_other" placeholder="مخاوف أخرى..." style="margin-top:9px;min-height:55px;"></textarea>
       </div>
 
       <div class="field">
-        <label class="field-label">بعد شهر من التشغيل، ما الشيء الذي لو رأيته سيجعلك تقول "النظام يستاهل"؟</label>
-        <textarea name="worth_it" placeholder="مثال: أوفّر ساعتين يومياً على الأقل في المتابعات اليدوية..."></textarea>
+        <label class="field-label">ما الذي تتوقعه من تجربة الاستخدام UI/UX؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="ux_expectations" value="واجهة بسيطة وغير مزدحمة"> واجهة بسيطة وغير مزدحمة</label>
+          <label><input type="checkbox" name="ux_expectations" value="خطوات أقل لإنجاز المهمة"> خطوات أقل لإنجاز المهمة</label>
+          <label><input type="checkbox" name="ux_expectations" value="ألوان واضحة للحالات والأولويات"> ألوان واضحة للحالات والأولويات</label>
+          <label><input type="checkbox" name="ux_expectations" value="بحث سريع وذكي"> بحث سريع وذكي</label>
+          <label><input type="checkbox" name="ux_expectations" value="Dashboard تعرض المهم فوراً"> Dashboard تعرض المهم فوراً</label>
+          <label><input type="checkbox" name="ux_expectations" value="إشعارات مفيدة وغير مزعجة"> إشعارات مفيدة وغير مزعجة</label>
+          <label><input type="checkbox" name="ux_expectations" value="واجهة مناسبة للموبايل والتابلت"> واجهة مناسبة للموبايل والتابلت</label>
+          <label><input type="checkbox" name="ux_expectations" value="تدريب قليل للمستخدم الجديد"> تدريب قليل للمستخدم الجديد</label>
+        </div>
       </div>
 
       <div class="field">
-        <label class="field-label">إذا كان بإمكانك تغيير شيء واحد فقط في طريقة عملكم الحالية — ماذا سيكون؟</label>
-        <textarea name="one_change" placeholder="اكتب بحرية..."></textarea>
+        <label class="field-label">ما مؤشرات النجاح التي تجعلك تقول إن النظام مفيد فعلاً؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="success_metrics" value="تقليل وقت إدخال البيانات"> تقليل وقت إدخال البيانات</label>
+          <label><input type="checkbox" name="success_metrics" value="تقليل نسيان المتابعات"> تقليل نسيان المتابعات</label>
+          <label><input type="checkbox" name="success_metrics" value="سرعة الوصول لمعلومات العميل"> سرعة الوصول لمعلومات العميل</label>
+          <label><input type="checkbox" name="success_metrics" value="وضوح مسؤولية كل موظف"> وضوح مسؤولية كل موظف</label>
+          <label><input type="checkbox" name="success_metrics" value="تقارير أسرع للإدارة"> تقارير أسرع للإدارة</label>
+          <label><input type="checkbox" name="success_metrics" value="تحسن سرعة الرد على العملاء"> تحسن سرعة الرد على العملاء</label>
+          <label><input type="checkbox" name="success_metrics" value="تقليل الأخطاء والتكرار"> تقليل الأخطاء والتكرار</label>
+          <label><input type="checkbox" name="success_metrics" value="التزام الفريق باستخدام النظام"> التزام الفريق باستخدام النظام</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما المخاوف من النظام الجديد؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="fears" value="يكون معقداً ويحتاج وقتاً للتعلم"> يكون معقداً ويحتاج وقتاً للتعلم</label>
+          <label><input type="checkbox" name="fears" value="الفريق لا يستخدمه بانتظام"> الفريق لا يستخدمه بانتظام</label>
+          <label><input type="checkbox" name="fears" value="لا يناسب طريقة عملنا الحالية"> لا يناسب طريقة عملنا الحالية</label>
+          <label><input type="checkbox" name="fears" value="تضيع بيانات قديمة عند النقل"> تضيع بيانات قديمة عند النقل</label>
+          <label><input type="checkbox" name="fears" value="يضيف خطوات بدل أن يقللها"> يضيف خطوات بدل أن يقللها</label>
+          <label><input type="checkbox" name="fears" value="الصلاحيات تمنعني من إنجاز عملي"> الصلاحيات تمنعني من إنجاز عملي</label>
+          <label><input type="checkbox" name="fears" value="التقارير لا تكون دقيقة"> التقارير لا تكون دقيقة</label>
+          <label><input type="checkbox" name="fears" value="لا توجد مخاوف حالياً"> لا توجد مخاوف حالياً</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num num-purple">٥</div>
+        <h2>الأولوية النهائية</h2>
+      </div>
+
+      <div class="field">
+        <label class="field-label">اختر أعلى 3 أولويات من وجهة نظرك.</label>
+        <span class="field-hint">لا يوجد منع تقني لاختيار أكثر، لكن الأفضل اختيار 3 فقط حتى تكون الإجابة دقيقة.</span>
+        <div class="check-grid">
+          <label><input type="checkbox" name="top_priorities" value="تسهيل إدخال العميل والطلب"> تسهيل إدخال العميل والطلب</label>
+          <label><input type="checkbox" name="top_priorities" value="تسهيل البحث والوصول للمعلومة"> تسهيل البحث والوصول للمعلومة</label>
+          <label><input type="checkbox" name="top_priorities" value="تسهيل متابعة العملاء والمهام"> تسهيل متابعة العملاء والمهام</label>
+          <label><input type="checkbox" name="top_priorities" value="تسهيل معرفة حالة الصفقة"> تسهيل معرفة حالة الصفقة</label>
+          <label><input type="checkbox" name="top_priorities" value="تسهيل التقارير للإدارة"> تسهيل التقارير للإدارة</label>
+          <label><input type="checkbox" name="top_priorities" value="تسهيل التعاون بين الفريق"> تسهيل التعاون بين الفريق</label>
+          <label><input type="checkbox" name="top_priorities" value="تقليل الأخطاء والتكرار"> تقليل الأخطاء والتكرار</label>
+          <label><input type="checkbox" name="top_priorities" value="تسهيل استخدام النظام للموظفين الجدد"> تسهيل استخدام النظام للموظفين الجدد</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ملاحظات إضافية اختيارية</label>
+        <span class="field-hint">هذا الحقل اختياري فقط إذا كان هناك شيء مهم لا تغطيه الخيارات السابقة.</span>
+        <textarea name="extra_notes" placeholder="اكتب ملاحظة قصيرة إن وجدت..."></textarea>
       </div>
     </div>
 
@@ -425,61 +461,50 @@
       <button type="submit">إرسال الإجابات ←</button>
       <p class="note">إجاباتك ستصل مباشرة لفريق التطوير</p>
     </div>
-
   </form>
 
   <div id="success-msg">
     <h3>وصلت إجاباتك — شكراً!</h3>
     <p>سيراجعها فريق التطوير ويتواصل معك قريباً.</p>
   </div>
-
 </div>
 
 <script>
 document.getElementById('discovery-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const fd = new FormData(this);
-
   const gc = (name) => fd.getAll(name).join(' | ') || '—';
   const gv = (name) => fd.get(name)?.trim() || '—';
 
-  const body = `إجابات استكشاف الـ Stakeholder — LoopChat CRM
+  const body = `إجابات تقييم تحديات الواجهات — LoopChat CRM
 ================================================
 
+--- 1) دور المستخدم وطريقة الاستخدام ---
 الدور: ${gc('role')} ${gv('role_other') !== '—' ? '/ ' + gv('role_other') : ''}
-أول شيء صباحاً: ${gv('morning')}
-عدد الأدوات يومياً: ${gv('tools_count')}
+أكثر الشاشات أو العمليات استخداماً: ${gc('used_screens')}
+عدد الأدوات أو طريقة العمل اليومية: ${gc('tools_count')}
 
---- الصعوبات ---
-آخر مرة ضاعت معلومة: ${gv('lost_info')}
-قنوات وصول العملاء: ${gc('channels')}
-كيف يُسجَّل الطلب الجديد: ${gv('request_flow')}
-تكرار "من المسؤول": ${gv('confusion_freq')}
-وقت إعداد التقرير: ${gv('report_time')}
+--- 2) تحديات الواجهات الحالية ---
+مشاكل الواجهات الحالية: ${gc('ui_problems')}
+أماكن ضياع الوقت: ${gc('time_waste')}
+الأخطاء الناتجة عن صعوبة الواجهة أو تشتت الأدوات: ${gc('errors')}
+مستوى صعوبة الاستخدام: ${gc('difficulty_level')}
 
---- العلاقة مع العملاء ---
-كيف تعرف تاريخ العميل: ${gv('client_history')}
-شكاوى التأخر في الرد: ${gv('complaint')}
-تفاصيل الشكوى: ${gv('complaint_detail')}
-كيف تحدس بالصفقة: ${gv('deal_sense')}
+--- 3) متابعة العملاء والطلبات ---
+قنوات وصول الطلبات: ${gc('channels')}
+طريقة معرفة تاريخ العميل حالياً: ${gc('client_history')}
+المعلومات المطلوبة مباشرة في صفحة العميل: ${gc('client_page_needs')}
+أسباب ضياع أو تأخير المتابعة: ${gc('followup_delay')}
 
---- التوقعات ---
-الحلم بعد 6 أشهر: ${gv('dream')}
+--- 4) المتوقع تسهيله في النظام الجديد ---
+الأشياء التي يجب أن تصبح أسهل: ${gc('expected_ease')}
+توقعات تجربة الاستخدام UI/UX: ${gc('ux_expectations')}
+مؤشرات النجاح: ${gc('success_metrics')}
 المخاوف: ${gc('fears')}
-مخاوف أخرى: ${gv('fear_other')}
-مقياس النجاح بعد شهر: ${gv('worth_it')}
-الشيء الواحد للتغيير: ${gv('one_change')}`;
 
-  const payload = {
-    service_id: 'service_gmail',
-    template_id: 'template_plain',
-    user_id: 'YOUR_EMAILJS_PUBLIC_KEY',
-    template_params: {
-      to_email: 'alaa.hamad.9198@gmail.com',
-      subject: 'إجابات فورم استكشاف Stakeholder — LoopChat CRM',
-      message: body
-    }
-  };
+--- 5) الأولوية النهائية ---
+أعلى الأولويات: ${gc('top_priorities')}
+ملاحظات إضافية: ${gv('extra_notes')}`;
 
   try {
     const res = await fetch('https://formspree.io/f/xeenqjnk', {
@@ -487,7 +512,7 @@ document.getElementById('discovery-form').addEventListener('submit', async funct
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
         _replyto: 'stakeholder@loopchat.com',
-        _subject: 'إجابات فورم استكشاف Stakeholder — LoopChat CRM',
+        _subject: 'إجابات تقييم تحديات الواجهات — LoopChat CRM',
         message: body
       })
     });
