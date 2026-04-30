@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استكشاف احتياجات النظام — LoopChat CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --border: #e4e0d8;
+    --border-focus: #2a5caa;
+    --text: #1a1917;
+    --text-muted: #706e69;
+    --text-light: #a09d97;
+    --accent: #2a5caa;
+    --accent-bg: #eef3fb;
+    --danger-bg: #fef3f0;
+    --danger-border: #f8c4b4;
+    --warning-bg: #fefbf0;
+    --warning-border: #f5e4a0;
+    --success-bg: #f0faf5;
+    --success-border: #a8e0c0;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+    line-height: 1.7;
+  }
+
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem 1.5rem;
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+
+  .header-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    border: 1px solid #c5d8f5;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .header p {
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .section {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .num-blue { background: var(--accent-bg); color: var(--accent); border: 1px solid #c5d8f5; }
+  .num-red { background: var(--danger-bg); color: #c0442a; border: 1px solid var(--danger-border); }
+  .num-yellow { background: var(--warning-bg); color: #8a6d00; border: 1px solid var(--warning-border); }
+  .num-green { background: var(--success-bg); color: #1a7a4a; border: 1px solid var(--success-border); }
+
+  .section-header h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .field { margin-bottom: 1.4rem; }
+  .field:last-child { margin-bottom: 0; }
+
+  label.field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+
+  .field-hint {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 10px 13px;
+    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    resize: vertical;
+    transition: border-color 0.15s;
+    line-height: 1.6;
+  }
+
+  textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: #fff;
+  }
+
+  textarea { min-height: 75px; }
+
+  .radio-group, .check-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .radio-group.inline, .check-group.inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .radio-group label, .check-group label, .check-grid label {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 14px;
+    color: var(--text);
+    cursor: pointer;
+    line-height: 1.5;
+  }
+
+  input[type="radio"], input[type="checkbox"] {
+    accent-color: var(--accent);
+    margin-top: 3px;
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+  .submit-area {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  button[type="submit"] {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 13px 40px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Tajawal', sans-serif;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  button[type="submit"]:hover { opacity: 0.9; }
+  button[type="submit"]:active { transform: scale(0.98); }
+
+  .note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 10px;
+  }
+
+  #success-msg {
+    display: none;
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  #success-msg h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a7a4a;
+    margin-bottom: 6px;
+  }
+
+  #success-msg p {
+    font-size: 13px;
+    color: #2d7a50;
+  }
+
+  @media (max-width: 480px) {
+    .check-grid { grid-template-columns: 1fr; }
+    .radio-group.inline { flex-direction: column; }
+    body { padding: 1rem 0.75rem 3rem; }
+    .section { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="header-logo">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8h6M8 5v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      LoopChat CRM
+    </div>
+    <h1>استكشاف احتياجات النظام</h1>
+    <p>نريد أن نفهم واقع عملكم اليومي لنبني نظاماً يحل مشاكلكم الحقيقية — لا توجد إجابات صح أو غلط.</p>
+  </div>
+
+  <form id="discovery-form">
+
+    <!-- Section 1 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num num-blue">١</div>
+        <h2>يومك في العمل</h2>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما هو دورك في الشركة؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="role" value="مدير / صاحب قرار"> مدير / صاحب قرار</label>
+          <label><input type="checkbox" name="role" value="مدير مبيعات"> مدير مبيعات</label>
+          <label><input type="checkbox" name="role" value="موظف مبيعات / علاقات عملاء"> موظف مبيعات / علاقات عملاء</label>
+          <label><input type="checkbox" name="role" value="دعم فني / خدمة عملاء"> دعم فني / خدمة عملاء</label>
+          <label><input type="checkbox" name="role" value="مشرف مشاريع"> مشرف مشاريع</label>
+          <label><input type="checkbox" name="role" value="محاسب / مالي"> محاسب / مالي</label>
+        </div>
+        <input type="text" name="role_other" placeholder="أخرى..." style="margin-top:9px;">
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما أول شيء تفعله حين تفتح الكمبيوتر صباحاً؟</label>
+        <textarea name="morning" placeholder="مثال: أفتح الإيميل وأشوف الطلبات الجديدة، ثم أفتح الواتساب لأرد على العملاء..."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">كم تطبيق أو أداة تفتحها في يوم عمل عادي؟</label>
+        <div class="radio-group inline">
+          <label><input type="radio" name="tools_count" value="1-2 أداة"> 1-2 أداة</label>
+          <label><input type="radio" name="tools_count" value="3-4 أدوات"> 3-4 أدوات</label>
+          <label><input type="radio" name="tools_count" value="5 أدوات أو أكثر"> 5 أدوات أو أكثر</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num num-red">٢</div>
+        <h2>الصعوبات الحقيقية</h2>
+      </div>
+
+      <div class="field">
+        <label class="field-label">أخبرني عن آخر مرة ضاعت فيها معلومة مهمة عن عميل أو صفقة</label>
+        <textarea name="lost_info" placeholder="مثال: عميل اتصل وقال إنه أرسل طلباً من أسبوع، ما كنا نعرف عنه شيئاً..."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">من أين يأتيك طلب العميل عادةً؟</label>
+        <div class="check-grid">
+          <label><input type="checkbox" name="channels" value="واتساب"> واتساب</label>
+          <label><input type="checkbox" name="channels" value="إيميل"> إيميل</label>
+          <label><input type="checkbox" name="channels" value="مكالمة هاتفية"> مكالمة هاتفية</label>
+          <label><input type="checkbox" name="channels" value="زيارة مباشرة"> زيارة مباشرة</label>
+          <label><input type="checkbox" name="channels" value="موقع الشركة"> موقع الشركة</label>
+          <label><input type="checkbox" name="channels" value="سوشيال ميديا"> سوشيال ميديا</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">لما يأتي طلب جديد الآن — كيف يُسجَّل ومن يعلم به؟</label>
+        <textarea name="request_flow" placeholder="مثال: الموظف يكتبه في ورقة أو Excel، ويبلّغ مديره عبر واتساب..."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">كم مرة في الأسبوع تسمع "ما علمنا بهذا الطلب" أو "من المسؤول عن هذا"؟</label>
+        <div class="radio-group inline">
+          <label><input type="radio" name="confusion_freq" value="نادراً"> نادراً</label>
+          <label><input type="radio" name="confusion_freq" value="1-2 مرة"> 1-2 مرة</label>
+          <label><input type="radio" name="confusion_freq" value="3-5 مرات"> 3-5 مرات</label>
+          <label><input type="radio" name="confusion_freq" value="يومياً تقريباً"> يومياً تقريباً</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">لو طلب منك مديرك الآن تقرير عن أداء الشهر الماضي — كم يأخذ منك وقتاً؟</label>
+        <div class="radio-group inline">
+          <label><input type="radio" name="report_time" value="أقل من ساعة"> أقل من ساعة</label>
+          <label><input type="radio" name="report_time" value="نصف يوم"> نصف يوم</label>
+          <label><input type="radio" name="report_time" value="يوم كامل أو أكثر"> يوم كامل أو أكثر</label>
+          <label><input type="radio" name="report_time" value="لا يمكنني إعداده بمفردي"> لا يمكنني إعداده بمفردي</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num num-yellow">٣</div>
+        <h2>العلاقة مع العملاء</h2>
+      </div>
+
+      <div class="field">
+        <label class="field-label">لما يتصل عميل قديم — كيف تعرف تاريخه معكم؟</label>
+        <div class="radio-group">
+          <label><input type="radio" name="client_history" value="أذكره من الذاكرة أو أسأل زميلي"> أذكره من الذاكرة أو أسأل زميلي</label>
+          <label><input type="radio" name="client_history" value="أبحث في الإيميل والواتساب"> أبحث في الإيميل والواتساب</label>
+          <label><input type="radio" name="client_history" value="Excel أو ملف مشترك"> Excel أو ملف مشترك</label>
+          <label><input type="radio" name="client_history" value="نظام موجود يعطيني المعلومات مباشرة"> نظام موجود يعطيني المعلومات مباشرة</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">هل سبق أن اتصل عليك عميل شاكياً لأنه لم يُرد عليه في الوقت المناسب؟</label>
+        <div class="radio-group inline">
+          <label><input type="radio" name="complaint" value="نعم، أكثر من مرة"> نعم، أكثر من مرة</label>
+          <label><input type="radio" name="complaint" value="نعم، مرة أو مرتين"> نعم، مرة أو مرتين</label>
+          <label><input type="radio" name="complaint" value="لا، نادراً"> لا، نادراً</label>
+        </div>
+        <textarea name="complaint_detail" placeholder="إن أردت، اذكر ما حصل..." style="margin-top:9px;min-height:60px;"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">كيف تعرف الآن أن الصفقة "ستُكسب" أو "ستُخسر"؟</label>
+        <textarea name="deal_sense" placeholder="مثال: من تجربتي الشخصية فقط، ما فيه مؤشر واضح..."></textarea>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num num-green">٤</div>
+        <h2>التوقعات من النظام الجديد</h2>
+      </div>
+
+      <div class="field">
+        <label class="field-label">تخيّل أنك بعد 6 أشهر من النظام الجديد — ماذا تتمنى أن يكون تغيّر؟</label>
+        <textarea name="dream" placeholder="مثال: أفتح صباحاً ويعطيني النظام قائمة بالعملاء اللي محتاجين متابعة اليوم..." style="min-height:85px;"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">ما الذي تخشى أن يحدث مع النظام الجديد؟</label>
+        <div class="radio-group">
+          <label><input type="checkbox" name="fears" value="معقد وسيأخذ وقتاً للتعلم"> معقد وسيأخذ وقتاً للتعلم</label>
+          <label><input type="checkbox" name="fears" value="الفريق لن يستخدمه بانتظام"> الفريق لن يستخدمه بانتظام</label>
+          <label><input type="checkbox" name="fears" value="ستضيع بيانات قديمة عند التحويل"> ستضيع بيانات قديمة عند التحويل</label>
+          <label><input type="checkbox" name="fears" value="لن يناسب طريقة عملنا تحديداً"> لن يناسب طريقة عملنا تحديداً</label>
+          <label><input type="checkbox" name="fears" value="لا مخاوف، متحمس تماماً"> لا مخاوف، متحمس تماماً</label>
+        </div>
+        <textarea name="fear_other" placeholder="مخاوف أخرى..." style="margin-top:9px;min-height:55px;"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">بعد شهر من التشغيل، ما الشيء الذي لو رأيته سيجعلك تقول "النظام يستاهل"؟</label>
+        <textarea name="worth_it" placeholder="مثال: أوفّر ساعتين يومياً على الأقل في المتابعات اليدوية..."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">إذا كان بإمكانك تغيير شيء واحد فقط في طريقة عملكم الحالية — ماذا سيكون؟</label>
+        <textarea name="one_change" placeholder="اكتب بحرية..."></textarea>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <button type="submit">إرسال الإجابات ←</button>
+      <p class="note">إجاباتك ستصل مباشرة لفريق التطوير</p>
+    </div>
+
+  </form>
+
+  <div id="success-msg">
+    <h3>وصلت إجاباتك — شكراً!</h3>
+    <p>سيراجعها فريق التطوير ويتواصل معك قريباً.</p>
+  </div>
+
+</div>
+
+<script>
+document.getElementById('discovery-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const fd = new FormData(this);
+
+  const gc = (name) => fd.getAll(name).join(' | ') || '—';
+  const gv = (name) => fd.get(name)?.trim() || '—';
+
+  const body = `إجابات استكشاف الـ Stakeholder — LoopChat CRM
+================================================
+
+الدور: ${gc('role')} ${gv('role_other') !== '—' ? '/ ' + gv('role_other') : ''}
+أول شيء صباحاً: ${gv('morning')}
+عدد الأدوات يومياً: ${gv('tools_count')}
+
+--- الصعوبات ---
+آخر مرة ضاعت معلومة: ${gv('lost_info')}
+قنوات وصول العملاء: ${gc('channels')}
+كيف يُسجَّل الطلب الجديد: ${gv('request_flow')}
+تكرار "من المسؤول": ${gv('confusion_freq')}
+وقت إعداد التقرير: ${gv('report_time')}
+
+--- العلاقة مع العملاء ---
+كيف تعرف تاريخ العميل: ${gv('client_history')}
+شكاوى التأخر في الرد: ${gv('complaint')}
+تفاصيل الشكوى: ${gv('complaint_detail')}
+كيف تحدس بالصفقة: ${gv('deal_sense')}
+
+--- التوقعات ---
+الحلم بعد 6 أشهر: ${gv('dream')}
+المخاوف: ${gc('fears')}
+مخاوف أخرى: ${gv('fear_other')}
+مقياس النجاح بعد شهر: ${gv('worth_it')}
+الشيء الواحد للتغيير: ${gv('one_change')}`;
+
+  const payload = {
+    service_id: 'service_gmail',
+    template_id: 'template_plain',
+    user_id: 'YOUR_EMAILJS_PUBLIC_KEY',
+    template_params: {
+      to_email: 'alaa.hamad.9198@gmail.com',
+      subject: 'إجابات فورم استكشاف Stakeholder — LoopChat CRM',
+      message: body
+    }
+  };
+
+  try {
+    const res = await fetch('https://formspree.io/f/xeenqjnk', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _replyto: 'stakeholder@loopchat.com',
+        _subject: 'إجابات فورم استكشاف Stakeholder — LoopChat CRM',
+        message: body
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('discovery-form').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      alert('حدث خطأ في الإرسال — حاول مرة أخرى');
+    }
+  } catch(err) {
+    alert('تعذر الإرسال — تحقق من اتصالك بالإنترنت');
+  }
+});
+</script>
+</body>
+</html>
