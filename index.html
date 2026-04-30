@@ -168,10 +168,71 @@
   }
   #success-msg h3 { font-size: 16px; font-weight: 700; color: #1a7a4a; margin-bottom: 6px; }
   #success-msg p { font-size: 13px; color: #2d7a50; }
+
+  .progress-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: -1.25rem 0 1.25rem;
+  }
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .progress-muted { color: var(--text-muted); font-weight: 500; }
+  .progress-track {
+    height: 8px;
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 50%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width 0.2s ease;
+  }
+  .form-page { display: none; }
+  .form-page.active { display: block; }
+  .nav-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 2rem;
+  }
+  .nav-area.single { justify-content: flex-end; }
+  .nav-btn, button[type="submit"] {
+    border: none;
+    padding: 13px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Tajawal', sans-serif;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .nav-btn.primary, button[type="submit"] { background: var(--accent); color: white; }
+  .nav-btn.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+  .nav-btn:hover, button[type="submit"]:hover { opacity: 0.9; }
+  .nav-btn:active, button[type="submit"]:active { transform: scale(0.98); }
+
   @media (max-width: 680px) {
     .check-grid, .check-grid.three { grid-template-columns: 1fr; }
     body { padding: 1rem 0.75rem 3rem; }
     .section { padding: 1.25rem; }
+    .nav-area { flex-direction: column-reverse; align-items: stretch; }
+    .nav-btn, button[type="submit"] { width: 100%; }
   }
 </style>
 </head>
@@ -187,6 +248,16 @@
   </div>
 
   <form id="discovery-form">
+
+    <div class="progress-card" aria-live="polite">
+      <div class="progress-top">
+        <span id="step-title">الصفحة 1 من 2 — الواقع الحالي والتحديات</span>
+        <span class="progress-muted">اختيارات سريعة</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <div class="form-page active" data-page="1">
 
     <div class="section">
       <div class="section-header">
@@ -364,6 +435,14 @@
       </div>
     </div>
 
+    <div class="nav-area single">
+      <button type="button" class="nav-btn primary" id="next-page">التالي: التوقعات والأولويات ←</button>
+    </div>
+
+    </div>
+
+    <div class="form-page" data-page="2">
+
     <div class="section">
       <div class="section-header">
         <div class="section-num num-green">٤</div>
@@ -457,9 +536,14 @@
       </div>
     </div>
 
-    <div class="submit-area">
-      <button type="submit">إرسال الإجابات ←</button>
-      <p class="note">إجاباتك ستصل مباشرة لفريق التطوير</p>
+    <div class="nav-area">
+      <button type="button" class="nav-btn secondary" id="prev-page">→ رجوع للصفحة الأولى</button>
+      <div class="submit-area" style="margin-top:0;">
+        <button type="submit">إرسال الإجابات ←</button>
+        <p class="note">إجاباتك ستصل مباشرة لفريق التطوير</p>
+      </div>
+    </div>
+
     </div>
   </form>
 
@@ -470,6 +554,29 @@
 </div>
 
 <script>
+
+const pages = Array.from(document.querySelectorAll('.form-page'));
+const stepTitle = document.getElementById('step-title');
+const progressFill = document.getElementById('progress-fill');
+const nextBtn = document.getElementById('next-page');
+const prevBtn = document.getElementById('prev-page');
+let currentPage = 0;
+
+function showPage(index) {
+  currentPage = index;
+  pages.forEach((page, i) => page.classList.toggle('active', i === index));
+  if (stepTitle) {
+    stepTitle.textContent = index === 0
+      ? 'الصفحة 1 من 2 — الواقع الحالي والتحديات'
+      : 'الصفحة 2 من 2 — التوقعات والأولويات';
+  }
+  if (progressFill) progressFill.style.width = index === 0 ? '50%' : '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+if (nextBtn) nextBtn.addEventListener('click', () => showPage(1));
+if (prevBtn) prevBtn.addEventListener('click', () => showPage(0));
+
 document.getElementById('discovery-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const fd = new FormData(this);
